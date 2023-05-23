@@ -9,6 +9,10 @@ edition = "2021"
 html2md = "0.2"
 reqwest = { version = "0.11", features = ["blocking", "multipart"] }
 thiserror = "1.0"
+visible = { version = "0.0.1", optional = true }
 
 [dev-dependencies]
 tokio = { version = "1", features = ["full"] }
+
+[features]
+doc-tests = ["visible"]

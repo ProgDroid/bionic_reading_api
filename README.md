@@ -9,19 +9,22 @@ The returned string can be used either as raw HTML straight from the response or
 
 ## Example
 
- ```rust
+```rust
 use bionic_reading_api::client::Client;
 
 #[tokio::main]
-async fn main() -> Result<()> {
+async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let res = Client::new("api_key")
         .convert("Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.")
         .send()
         .await?;
+
     let html = res.html().unwrap();
-    let markdown = res.markdown.unwrap();
+    let markdown = res.markdown().unwrap();
+
     println!("{html}");
     println!("{markdown}");
+
     Ok(())
 }
 ```

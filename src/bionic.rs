@@ -1,6 +1,35 @@
+//! Bionic Reading module
+//!
+//! Contains parameters for customising the highlights in the resulting string.
+//!
+//! ## Example
+//!
+//! ```rust,no_run
+//! use bionic_reading_api::{
+//!     bionic::{Fixation, Saccade},
+//!     client::Client,
+//! };
+//!
+//! #[tokio::main]
+//! async fn main() -> Result<(), Box<dyn std::error::Error>> {
+//!     let res = Client::new("api_key")
+//!         .convert("Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.")
+//!         .fixation(Fixation::Strong)
+//!         .saccade(Saccade::Fewest)
+//!         .send()
+//!         .await?;
+//!
+//!     let html = res.html().unwrap();
+//!     println!("{html}");
+//!
+//!     Ok(())
+//! }
+//! ```
+
 use reqwest::Error as ReqwestError;
 use std::{convert::From, fmt::Debug};
 
+/// Custom API Errors
 #[derive(thiserror::Error)]
 pub enum Error {
     #[error("Failed to convert given text")]
@@ -19,6 +48,10 @@ impl Debug for Error {
     }
 }
 
+/// Fixation levels.
+///
+/// Defines the [expression of the letter combinations](https://bionic-reading.com/br-method/).
+/// Weakest has least amount of highlighted characters, strongest has the most.
 pub enum Fixation {
     Weakest,
     Weak,
@@ -45,6 +78,10 @@ impl From<Fixation> for u8 {
     }
 }
 
+/// Saccade levels.
+///
+/// Defines the [visual jumps from Fixation to Fixation](https://bionic-reading.com/br-method/).
+/// Fewest saccades for biggest jumps, most sacccades for shortest jumps.
 pub enum Saccade {
     Fewest,
     Few,
@@ -71,16 +108,35 @@ impl From<Saccade> for u8 {
     }
 }
 
+/// Bionic Reading converted text.
+/// Can be used in its raw form (as HTML) or Markdown.
+#[cfg_attr(feature = "doc-tests", visible::StructFields(pub))]
 pub struct Text {
     pub(crate) html: Option<String>,
 }
 
 impl Text {
+    /// Get content as HTML.
+    ///
+    /// ```rust
+    /// # use bionic_reading_api::bionic::Text;
+    /// # let html = Some(String::from("<b>Lor</b>em <b>ips</b>um <b>dol</b>or <b>si</b>t <b>ame</b>t"));
+    /// # let response = Text { html };
+    /// assert_eq!(response.html().unwrap(), "<b>Lor</b>em <b>ips</b>um <b>dol</b>or <b>si</b>t <b>ame</b>t");
+    /// ```
     #[must_use]
     pub fn html(&self) -> Option<String> {
         self.html.as_ref().cloned()
     }
 
+    /// Get content as Markdown, converted from HTML.
+    ///
+    /// ```rust
+    /// # use bionic_reading_api::bionic::Text;
+    /// # let html = Some(String::from("<b>Lor</b>em <b>ips</b>um <b>dol</b>or <b>si</b>t <b>ame</b>t"));
+    /// # let response = Text { html };
+    /// assert_eq!(response.markdown().unwrap(), "**Lor**em **ips**um **dol**or **si**t **ame**t");
+    /// ```
     #[must_use]
     pub fn markdown(&self) -> Option<String> {
         self.html.as_ref().map(|str| html2md::parse_html(str))
