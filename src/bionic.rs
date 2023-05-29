@@ -1,6 +1,6 @@
-//! Bionic Reading module
+//! Bionic Reading parameters and result wrapper
 //!
-//! Contains parameters for customising the highlights in the resulting string.
+//! Parameters allow customising the highlights in the resulting string.
 //!
 //! ## Example
 //!
