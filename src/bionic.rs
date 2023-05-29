@@ -32,6 +32,7 @@ use std::{convert::From, fmt::Debug};
 /// Custom API Errors
 #[derive(thiserror::Error)]
 pub enum Error {
+    /// Failed to convert given text
     #[error("Failed to convert given text")]
     FailedToConvert(#[from] ReqwestError),
 }
@@ -48,9 +49,10 @@ impl Debug for Error {
     }
 }
 
-/// Fixation levels.
+/// Fixation levels
 ///
 /// Defines the [expression of the letter combinations](https://bionic-reading.com/br-method/).
+///
 /// Weakest has least amount of highlighted characters, strongest has the most.
 pub enum Fixation {
     Weakest,
@@ -78,9 +80,10 @@ impl From<Fixation> for u8 {
     }
 }
 
-/// Saccade levels.
+/// Saccade levels
 ///
 /// Defines the [visual jumps from Fixation to Fixation](https://bionic-reading.com/br-method/).
+///
 /// Fewest saccades for biggest jumps, most sacccades for shortest jumps.
 pub enum Saccade {
     Fewest,
@@ -109,6 +112,7 @@ impl From<Saccade> for u8 {
 }
 
 /// Bionic Reading converted text.
+///
 /// Can be used in its raw form (as HTML) or Markdown.
 #[cfg_attr(feature = "doc-tests", visible::StructFields(pub))]
 pub struct Text {
@@ -118,6 +122,22 @@ pub struct Text {
 impl Text {
     /// Get content as HTML.
     ///
+    /// Once you have the response:
+    /// ```rust,no_run
+    /// # use bionic_reading_api::{
+    /// #     bionic::{Fixation, Saccade},
+    /// #     client::Client,
+    /// #  };
+    /// # #[tokio::main]
+    /// # async fn main() -> Result<(), Box<dyn std::error::Error>> {
+    /// let response = Client::new("api_key")
+    ///     .convert("Lorem ipsum dolor sit amet")
+    ///     .send()
+    ///     .await?;
+    /// # Ok(())
+    /// # }
+    /// ```
+    /// Then it can be turned into HTML.
     /// ```rust
     /// # use bionic_reading_api::bionic::Text;
     /// # let html = Some(String::from("<b>Lor</b>em <b>ips</b>um <b>dol</b>or <b>si</b>t <b>ame</b>t"));
@@ -131,6 +151,22 @@ impl Text {
 
     /// Get content as Markdown, converted from HTML.
     ///
+    /// Once you have the response:
+    /// ```rust,no_run
+    /// # use bionic_reading_api::{
+    /// #     bionic::{Fixation, Saccade},
+    /// #     client::Client,
+    /// #  };
+    /// # #[tokio::main]
+    /// # async fn main() -> Result<(), Box<dyn std::error::Error>> {
+    /// let response = Client::new("api_key")
+    ///     .convert("Lorem ipsum dolor sit amet")
+    ///     .send()
+    ///     .await?;
+    /// # Ok(())
+    /// # }
+    /// ```
+    /// Then it can be turned into Markdown.
     /// ```rust
     /// # use bionic_reading_api::bionic::Text;
     /// # let html = Some(String::from("<b>Lor</b>em <b>ips</b>um <b>dol</b>or <b>si</b>t <b>ame</b>t"));
