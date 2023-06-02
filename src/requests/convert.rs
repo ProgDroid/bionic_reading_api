@@ -91,3 +91,44 @@ impl Builder {
         }
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_set_fixation() {
+        let builder = Builder::new(BionicClient::new("api_key"), String::from("Input"));
+
+        let builder = builder.fixation(Fixation::Strongest);
+
+        let actual: u8 = builder.request.fixation.into();
+        let expected: u8 = Fixation::Strongest.into();
+        let default: u8 = Fixation::default().into();
+
+        assert_ne!(
+            actual, default,
+            "Fixation was still default after being modified"
+        );
+
+        assert_eq!(actual, expected, "Fixation not set to given value");
+    }
+
+    #[test]
+    fn test_set_saccade() {
+        let builder = Builder::new(BionicClient::new("api_key"), String::from("Input"));
+
+        let builder = builder.saccade(Saccade::Most);
+
+        let actual: u8 = builder.request.saccade.into();
+        let expected: u8 = Saccade::Most.into();
+        let default: u8 = Saccade::default().into();
+
+        assert_ne!(
+            actual, default,
+            "Saccade was still default after being modified"
+        );
+
+        assert_eq!(actual, expected, "Saccade not set to given value");
+    }
+}

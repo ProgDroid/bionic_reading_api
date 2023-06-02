@@ -31,20 +31,36 @@ impl Debug for Secret {
 mod tests {
     use super::*;
 
+    const SECRET_STRING: &str = "Some secret";
+
     #[test]
     fn test_redacted() {
-        let secret_string = "Some secret";
-        let secret = Secret::from_str(secret_string);
+        let secret = Secret::from_str(SECRET_STRING).unwrap();
 
-        let log_attempt = format!("The secret is {secret:?}");
+        let log_string = "The secret is";
+
+        let log_attempt = format!("{log_string} {secret:?}");
 
         assert!(
-            !log_attempt.contains(secret_string),
+            !log_attempt.contains(SECRET_STRING),
             "Log attempt contains the secret string: `{log_attempt}`"
         );
-        assert!(
-            log_attempt.contains("REDACTED"),
+        assert_eq!(
+            log_attempt,
+            format!("{log_string} REDACTED",),
             "Secret was not redacted in log attempt: `{log_attempt}`"
+        );
+    }
+
+    #[test]
+    fn test_inner() {
+        let secret = Secret::from_str(SECRET_STRING).unwrap();
+
+        assert_eq!(
+            secret.secret(),
+            SECRET_STRING,
+            "Returned secret was not the provided secret: `{}`",
+            secret.secret()
         );
     }
 }
