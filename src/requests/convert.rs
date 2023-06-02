@@ -39,16 +39,6 @@ impl Builder {
         }
     }
 
-    pub fn input<T: Into<String>>(self, input: T) -> Self {
-        Self {
-            request: Request {
-                input: input.into(),
-                ..self.request
-            },
-            ..self
-        }
-    }
-
     #[allow(clippy::missing_const_for_fn)]
     pub fn fixation(self, fixation: Fixation) -> Self {
         Self {
