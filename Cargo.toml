@@ -2,6 +2,14 @@
 name = "bionic_reading_api"
 version = "0.1.0"
 edition = "2021"
+authors = ["nando"]
+license-file = "LICENSE"
+description = "Unofficial Rust library to get a Bionic Reading converted string from their Rapid API."
+documentation = "https://docs.rs/bionic_reading_api/latest"
+repository = "https://github.com/ProgDroid/bionic_reading_api"
+readme = "README.md"
+keywords = ["bionic", "api"]
+categories = ["api-bindings"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
