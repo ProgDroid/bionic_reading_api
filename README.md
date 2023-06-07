@@ -1,4 +1,4 @@
-# bionic_reading_api
+# Bionic Reading API
 
 Unofficial Rust library to get a Bionic Reading converted string from their Rapid API.
 
