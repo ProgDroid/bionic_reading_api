@@ -54,20 +54,20 @@ jobs:
         with:
           command: clippy
           args: |
-            --workspace --message-format=json --all-targets --all -- 
-            -D warnings 
-            -D clippy::all 
-            -D clippy::pedantic 
-            -D clippy::nursery 
-            -A clippy::missing_docs_in_private_items 
-            -A clippy::separated_literal_suffix 
-            -A clippy::implicit_return" 
-            -A clippy::print_stderr" 
-            -A clippy::exhaustive_enums" 
-            -A clippy::exhaustive_structs" 
-            -A clippy::single_char_lifetime_names" 
-            -A clippy::missing_inline_in_public_items" 
-            -A clippy::self_named_module_files" 
-            -A clippy::wildcard_enum_match_arm" 
-            -A clippy::pattern_type_mismatch" 
-            -A clippy::std-instead-of-core" 
+            --workspace --message-format=json --all-targets --all --
+            -D warnings
+            -D clippy::all
+            -D clippy::pedantic
+            -D clippy::nursery
+            -A clippy::missing_docs_in_private_items
+            -A clippy::separated_literal_suffix
+            -A clippy::implicit_return
+            -A clippy::print_stderr
+            -A clippy::exhaustive_enums
+            -A clippy::exhaustive_structs
+            -A clippy::single_char_lifetime_names
+            -A clippy::missing_inline_in_public_items
+            -A clippy::self_named_module_files
+            -A clippy::wildcard_enum_match_arm
+            -A clippy::pattern_type_mismatch
+            -A clippy::std-instead-of-core
