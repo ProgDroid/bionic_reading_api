@@ -80,6 +80,18 @@ impl From<Fixation> for u8 {
     }
 }
 
+impl From<u8> for Fixation {
+    fn from(value: u8) -> Self {
+        match value {
+            1 => Self::Weakest,
+            2 => Self::Weak,
+            4 => Self::Strong,
+            5 => Self::Strongest,
+            _ => Self::Average,
+        }
+    }
+}
+
 /// Saccade levels
 ///
 /// Defines the [visual jumps from Fixation to Fixation](https://bionic-reading.com/br-method/).
@@ -107,6 +119,18 @@ impl From<Saccade> for u8 {
             Saccade::Average => 30,
             Saccade::More => 40,
             Saccade::Most => 50,
+        }
+    }
+}
+
+impl From<u8> for Saccade {
+    fn from(value: u8) -> Self {
+        match value {
+            10 => Self::Fewest,
+            20 => Self::Few,
+            40 => Self::More,
+            50 => Self::Most,
+            _ => Self::Average,
         }
     }
 }

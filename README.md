@@ -1,3 +1,5 @@
+[![cio-img]][cio-link] [![ci-img]][ci-link] [![doc-img]][doc-link]
+
 # Bionic Reading API
 
 Unofficial Rust library to get a Bionic Reading converted string from their Rapid API.
@@ -28,3 +30,10 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     Ok(())
 }
 ```
+
+[ci-link]: https://github.com/ProgDroid/bionic_reading_api/actions/workflows/test.yml
+[ci-img]: https://github.com/ProgDroid/bionic_reading_api/actions/workflows/test.yml/badge.svg
+[cio-link]: https://crates.io/crates/bionic_reading_api
+[cio-img]: https://img.shields.io/crates/v/bionic_reading_api
+[doc-link]: https://docs.rs/bionic_reading_api
+[doc-img]: https://img.shields.io/docsrs/bionic_reading_api/latest
